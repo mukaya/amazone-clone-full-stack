@@ -1,12 +1,27 @@
 const router = require("express").Router();
 const Product = require("../models/Product");
-const upload = require("../middlewares/upload-photo")
+const upload = require("../middlewares/upload-photo");
 
 router.post("/products", upload.single("photo"), async (req, res) => {
   try {
-    let { title, description, price, stockQuantity } = req.body;
+    let {
+      title,
+      description,
+      price,
+      stockQuantity,
+      ownerID,
+      catecoryID,
+    } = req.body;
     let { filename } = req.file;
-    let product = new Product({title, description, price, stockQuantity,photo:filename});
+    let product = new Product({
+      title,
+      description,
+      price,
+      stockQuantity,
+      photo: filename,
+      ownerID,
+      catecoryID,
+    });
     await product.save();
     res.json({ status: true, message: "Successfully saved" });
   } catch (err) {
@@ -15,7 +30,79 @@ router.post("/products", upload.single("photo"), async (req, res) => {
       message: err.message,
     });
   }
+});
 
+router.get("/products", async (req, res) => {
+  try {
+    let products = await Product.find();
+    return res.json({ status: true, products });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/products/:id", async (req, res) => {
+  try {
+    let products = await Product.findOne({ _id: req.params.id });
+    return res.json({ status: true, products });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.put("/products/:id", upload.single("photo"), async (req, res) => {
+  let {
+    title,
+    description,
+    price,
+    stockQuantity,
+    ownerID,
+    catecoryID,
+  } = req.body;
+  let { filename } = req.file;
+  try {
+    let product = await Product.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          title,
+          description,
+          price,
+          stockQuantity,
+          photo: filename,
+          ownerID,
+          catecoryID,
+        },
+      },
+      { upsert: true }
+    );
+    return res.json({ status: true, updateProduct: product });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.delete("/products/:id", async (req, res) => {
+  try {
+    let deleteProduct = await Product.findOneAndDelete({ _id: req.params.id });
+    if (deleteProduct) {
+      return res.json({ status: true, message: "Successfully deleted" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 });
 
 module.exports = router;
