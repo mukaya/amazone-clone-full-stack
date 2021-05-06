@@ -1,13 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const PORT = 3000;
+const dotenv = require("dotenv");
+const cors = require("cors")
 
+dotenv.config();
 const app = express();
 
 mongoose.connect(
-  "mongodb+srv://osee:osee@cluster0.kahm9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  process.env.DATABASE,
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   (err) => {
     if (err) {
       console.log(err);
@@ -16,24 +18,24 @@ mongoose.connect(
     }
   }
 );
-
 //Middlewares
+app.use(express.static('uploads'))
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.json("Hello word");
-});
+//require apis
+const productsRouters = require("./routes/product")
+app.use("/api/", productsRouters)
 
-app.post("/", (req, res) => {
-  res.json("On post");
-});
+const categoryRouters = require("./routes/category")
+app.use("/api/", categoryRouters)
 
-app.listen(PORT, (err) => {
+app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log(err);
   } else {
-    console.log(`Server is open on port ${PORT}`);
+    console.log(`Server is open on port ${process.env.PORT}`);
   }
 });
