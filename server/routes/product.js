@@ -46,8 +46,8 @@ router.get("/products", async (req, res) => {
 
 router.get("/products/:id", async (req, res) => {
   try {
-    let products = await Product.findOne({ _id: req.params.id });
-    return res.json({ status: true, products });
+    let product = await Product.findOne({ _id: req.params.id });
+    return res.json({ status: true, product });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -57,16 +57,16 @@ router.get("/products/:id", async (req, res) => {
 });
 
 router.put("/products/:id", upload.single("photo"), async (req, res) => {
-  let {
-    title,
-    description,
-    price,
-    stockQuantity,
-    ownerID,
-    catecoryID,
-  } = req.body;
-  let { filename } = req.file;
   try {
+    let {
+      title,
+      description,
+      price,
+      stockQuantity,
+      ownerID,
+      catecoryID,
+    } = req.body;
+    let { filename } = req.file;
     let product = await Product.findOneAndUpdate(
       { _id: req.params.id },
       {
