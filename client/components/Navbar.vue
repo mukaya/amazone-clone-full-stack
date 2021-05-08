@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="nav-opt-sprite nav-locate-us nav-lang-en nav-ssl nav-unrec">
-      <div class="conatiner-fluid dekstop-nav">
+      <div class="container-fluid dekstop-nav">
         <div class="row">
           <!-- Logo -->
           <div class="col-sm-2">
@@ -11,6 +11,12 @@
               </nuxt-link>
             </div>
           </div>
+
+          <div class="col-sm-6 pt-0">
+            <Search />
+          </div>
+
+          <div class="col-sm-4"></div>
         </div>
 
         <div class="row">
@@ -69,7 +75,6 @@
                 class="nav-a nav-a-2 icp-link-style-2"
               >
                 <span class="icp-nav-link-inner">
-
                   <span class="nav-link-1">
                     <span class="icp-nav-globe-img-2"></span>
                     <span class="icp-nav-language">EN</span>
@@ -86,41 +91,42 @@
               </a>
 
               <span class="icp-nav-link-border"></span>
-                <nuxt-link
-                  to="/register"
-                  class="nav-a nav-a-2"
-                  id="nav-link-accountList"
-                  tabindex="0"
-                >
-                  <span class="nav-line-1">Hello, Sign in</span>
-                  <span class="nav-line-2">
-                    Account &nbsp; Lists
-                    <span
-                      class="nav-icon nav-arrow"
-                      style="visibility: visible"
-                    ></span>
-                  </span>
-                </nuxt-link>
+              <nuxt-link
+                to="/register"
+                class="nav-a nav-a-2"
+                id="nav-link-accountList"
+                tabindex="0"
+              >
+                <span class="nav-line-1">Hello, Sign in</span>
+                <span class="nav-line-2">
+                  Account &nbsp; Lists
+                  <span
+                    class="nav-icon nav-arrow"
+                    style="visibility: visible"
+                  ></span>
+                </span>
+              </nuxt-link>
 
-                <nuxt-link
-                  to="/orders"
-                  class="nav-a nav-a-2 nav-single-row-link"
-                >
-                   <span class="nav-line-1"></span>
-                   <span class="nav-line-2">Orders</span>
-                </nuxt-link>
+              <nuxt-link to="/orders" class="nav-a nav-a-2 nav-single-row-link">
+                <span class="nav-line-1"></span>
+                <span class="nav-line-2">Orders</span>
+              </nuxt-link>
 
-                <nuxt-link
-                  to="/cart"
-                  class="nav-a nav-a-2 nav-cart"
-                  id="nav-cart"
+              <nuxt-link
+                to="/cart"
+                class="nav-a nav-a-2 nav-cart"
+                id="nav-cart"
+              >
+                <span aria-hidden="true" class="nav-line-1"></span>
+                <span aria-hidden="true" class="nav-line-2">Cart</span>
+                <span class="nav-cart-icon nav-sprite"></span>
+                <span
+                  id="nav-cat-count"
+                  aria-hidden="true"
+                  class="nav-cart-count nav-cart-0"
+                  >0</span
                 >
-                   <span aria-hidden="true" class="nav-line-1"></span>
-                   <span aria-hidden="true" class="nav-line-2">Cart</span>
-                   <span class="nav-cart-icon nav-sprite"></span>
-                   <span id="nav-cat-count" aria-hidden="true" class="nav-cart-count nav-cart-0">0</span>
-                </nuxt-link>
-
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -130,5 +136,8 @@
 </template>
 
 <script>
-export default {};
+import Search from "./Search";
+export default {
+  components: { Search }
+};
 </script>
