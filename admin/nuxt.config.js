@@ -1,4 +1,5 @@
 export default {
+  mode: "universal",
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'admin',
@@ -8,7 +9,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'stylesheet', href: '/css/all.css' },
+      { rel: 'stylesheet', href: '/css/font-awesome/css/all.css' },
       { rel: 'stylesheet', href: '/css/default.css' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
@@ -28,7 +29,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
