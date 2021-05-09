@@ -29,10 +29,12 @@ app.use(express.urlencoded({ extended: false }));
 const productsRouters = require("./routes/product")
 const categoryRouters = require("./routes/category")
 const ownerRouters = require("./routes/owner")
+const authRouters = require("./routes/auth")
 
 app.use("/api/", productsRouters)
 app.use("/api/", categoryRouters)
 app.use("/api/", ownerRouters)
+app.use("/api/", authRouters)
 
 app.listen(process.env.PORT, (err) => {
   if (err) {
