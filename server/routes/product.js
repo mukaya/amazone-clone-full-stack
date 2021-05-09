@@ -10,7 +10,7 @@ router.post("/products", upload.single("photo"), async (req, res) => {
       price,
       stockQuantity,
       ownerID,
-      catecoryID,
+      categoryID,
     } = req.body;
     let { filename } = req.file;
     let product = new Product({
@@ -19,8 +19,8 @@ router.post("/products", upload.single("photo"), async (req, res) => {
       price,
       stockQuantity,
       photo: filename,
-      ownerID,
-      catecoryID,
+      owner:ownerID,
+      category:categoryID,
     });
     await product.save();
     res.json({ status: true, message: "Successfully saved" });
@@ -34,7 +34,7 @@ router.post("/products", upload.single("photo"), async (req, res) => {
 
 router.get("/products", async (req, res) => {
   try {
-    let products = await Product.find();
+    let products = await Product.find().populate("owner category").exec();
     return res.json({ status: true, products });
   } catch (error) {
     res.status(500).json({
@@ -46,7 +46,7 @@ router.get("/products", async (req, res) => {
 
 router.get("/products/:id", async (req, res) => {
   try {
-    let product = await Product.findOne({ _id: req.params.id });
+    let product = await Product.findOne({ _id: req.params.id }).populate("owner category").exec();
     return res.json({ status: true, product });
   } catch (error) {
     res.status(500).json({
@@ -64,7 +64,7 @@ router.put("/products/:id", upload.single("photo"), async (req, res) => {
       price,
       stockQuantity,
       ownerID,
-      catecoryID,
+      categoryID,
     } = req.body;
     let { filename } = req.file;
     let product = await Product.findOneAndUpdate(
@@ -76,8 +76,8 @@ router.put("/products/:id", upload.single("photo"), async (req, res) => {
           price,
           stockQuantity,
           photo: filename,
-          ownerID,
-          catecoryID,
+          owner:ownerID,
+          category:categoryID,
         },
       },
       { upsert: true }

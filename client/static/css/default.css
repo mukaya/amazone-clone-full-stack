@@ -1149,11 +1149,11 @@ header form input{
 /*
     BREACRUMB
 */
-.wayfinding-breadcrumbs_container {
+.wayfinding-breadcrumbs-container {
     padding: 0 3px!important;
     margin-top: 8px!important;
 }
-.wayfinding-breadcrumbs_container ul li a{
+.wayfinding-breadcrumbs-container ul li a{
     font-family: "MyWebFont",Arial,sans-serif;
     font-weight: normal;
 }
