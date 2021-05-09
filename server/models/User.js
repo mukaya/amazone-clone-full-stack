@@ -30,4 +30,9 @@ UserSChema.pre("save", function (next) {
   }
 });
 
+UserSChema.methods.comparePassword = function(password, next){
+  let user = this
+  return bcrypt.compareSync(password, user.password)
+}
+
 module.exports = mongoose.model("User", UserSChema);
